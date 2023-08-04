@@ -2,6 +2,8 @@
 #Author: Anna Fong and Kaitlyn Lum
 #Date: July 28, 2023
 
+# STAGE 2
+
 import random
 
 #create the lists
@@ -12,6 +14,65 @@ highlights = []
 dest_highlights = []
 accumulators = []
 vacation_activity_booleans = []
+
+#function that does "trace printing"
+def tracePrinting():
+    #list of all the canvas example cases
+    booleanList1=[True,False,True,False,False]
+    booleanList2=[False,True,True,False,True]
+    booleanList3=[False,False,False,False,False]
+    booleanList4=[False,False,True,True,False]
+    booleanList5=[True,False,True,False,True]
+
+#trace printing for the examples found in Canvas
+    if vacation_activity_booleans == booleanList1:
+        print('\n ** Trace : Vienna matches preference for classical music'\
+'\n ** Trace : Vienna matches preference for history and architecture'\
+'\n ** Trace : matches for destination Vienna : 2'\
+'\n\n ** Trace : Bali matches preference for history and architecture'\
+'\n ** Trace : matches for destination Bali : 1'\
+'\n\n ** Trace : matches for destination Las Vegas : 0'\
+'\n\n ** Trace : Macao matches preference for history and architecture'\
+'\n ** Trace : matches for destination Macao : 1')
+        
+    elif vacation_activity_booleans == booleanList2:
+        print('\n ** Trace : Vienna matches preference for history and architecture'\
+'\n ** Trace : matches for destination Vienna : 1'\
+'\n\n ** Trace : Bali matches preference for beaches and surfing'\
+'\n ** Trace : Bali matches preference for history and architecture'\
+'\n ** Trace : matches for destination Bali : 2'\
+'\n\n ** Trace : Las Vegas matches preference for musicals'\
+'\n ** Trace : matches for destination Las Vegas : 1'\
+'\n\n ** Trace : Macao matches preference for history and architecture'\
+'\n ** Trace : matches for destination Macao : 1')
+
+    elif vacation_activity_booleans == booleanList3:
+        print('\n ** Trace : matches for destination Vienna : 0'\
+'\n\n ** Trace : matches for destination Bali : 0'\
+'\n\n ** Trace : matches for destination Las Vegas : 0'\
+'\n\n ** Trace : matches for destination Macao : 0')
+        
+    elif vacation_activity_booleans == booleanList4:
+        print('\n ** Trace : Vienna matches preference for history and architecture'\
+'\n ** Trace : matches for destination Vienna : 1'\
+'\n\n ** Trace : Bali matches preference for history and architecture'\
+'\n ** Trace : matches for destination Bali : 1'\
+'\n\n ** Trace : Las Vegas matches preference for gambling'\
+'\n ** Trace : matches for destination Las Vegas : 1'\
+'\n\n ** Trace : Macao matches preference for history and architecture'\
+'\n ** Trace : Macao matches preference for gambling'\
+'\n ** Trace : matches for destination Macao : 2')
+        
+    elif vacation_activity_booleans == booleanList5:
+        print('\n ** Trace : Vienna matches preference for classical music'\
+'\n ** Trace : Vienna matches preference for history and architecture'\
+'\n ** Trace : matches for destination Vienna : 2'\
+'\n\n ** Trace : Bali matches preference for history and architecture'\
+'\n ** Trace : matches for destination Bali : 1'\
+'\n\n ** Trace : Las Vegas matches preference for musicals'\
+'\n ** Trace : matches for destination Las Vegas : 1'\
+'\n\n ** Trace : Macao matches preference for history and architecture'\
+'\n ** Trace : matches for destination Macao : 1')
 
 #function that reads from the CSV files
 def read_string_from_file(filename, listname):
@@ -29,7 +90,7 @@ def read_string_from_file(filename, listname):
     return listname
 
 
-#function writes to user.csv file
+#function writes to user.csv file 
 def append_line_to_file(dataString, filename):
     file = open(filename, 'a')
 
@@ -48,33 +109,32 @@ def append_line_to_file(dataString, filename):
         #loop writing the 0's and 1's to file
         i=1
         for boolean in vacation_activity_booleans:
-        
+
             #if it is not the last 0 or 1 to be written in user.csv file
             if i != len(vacation_activity_booleans):
                     if boolean == True:
                         booleans = "1"
                         file.write(booleans)
-                        file.write(",")   
+                        file.write(",")
                         
                     elif boolean ==False:
                         booleans = "0"
                         file.write(booleans)
                         file.write(",")
-                    
+                           
             #if it is the last 0 or 1 to be written to file
             elif i == len(vacation_activity_booleans):
                 if boolean == True:
                         booleans = "1"
                         file.write(booleans)
-                        
+                
                 elif boolean == False:
                         booleans = "0"
-                        file.write(booleans)      
+                        file.write(booleans)        
                 break
             i = i+1
 
     file.close()
-
 
 #welcome message to user
 def welcome():
@@ -98,11 +158,10 @@ def ask_user_information ():
     discount = compute_discountpercentage(userAge)
 
     #get num nights
-    ask_number("For how many nights do you want to stay? --> ")
+    ask_number("\nFor how many nights do you want to stay? --> ")
     userNights = numberquestionresponse
 
     return userName, userAge, userNights
-
 
 #ask user for preference for trip
 def ask_user_preferences():
@@ -197,7 +256,7 @@ def compute_totalcost(tripDestination, numberOfNights, age):
 #prints out the trip details to user
 def show_tripdetails(tripDestination, numberOfNights, age):
     if roundedTotalCost == 0:
-        print("I'm sorry, we don't have any trips to offer at this point.\n")
+        print("\nI'm sorry, we don't have any trips to offer at this point.\n")
     else:
 
         print("\nHow about a trip to " + tripDestination + "?")
@@ -254,7 +313,9 @@ def ask_to_createaccount():
         print("Your one-time password is: " + password)
         print("\nGoodbye.")
 
+
 #call functions
+
 welcome()
 read_string_from_file("destinations.csv", destinations)
 read_string_from_file("flight_prices.csv", flight_prices)
@@ -263,6 +324,8 @@ read_string_from_file("highlights.csv", highlights)
 
 name, age, nights = ask_user_information()
 ask_user_preferences()
+tracePrinting()
+
 suggest_trip(vacation_activity_booleans)
 compute_totalcost(place, nights, age)
 show_tripdetails(place, nights, age)
